@@ -1,0 +1,26 @@
+#include "socketconnect.h"
+
+#pragma comment(lib,"ws2_32.lib")
+
+socket::socket()
+{
+
+}
+
+bool socket::start(){
+    HANDLE handle = CreateThread(NULL, 0, connectToServer(), NULL, 0, NULL);
+    WaitForSingleObject(handle, INFINITE);
+}
+
+DWORD WINAPI socket::connectToServer(QLabel* label){
+    WSAData wsa;
+    if(WSAStartup(MAKEWORD(2,2), &wsa) != 0){
+        label->setText("Failed to start wsa!");
+        return;
+    }
+    
+    SOCKET socketClient = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    
+    SOCKADDR_IN addrServer;
+    
+}
